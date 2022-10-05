@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% comment %} for head title tags and helping us with SEO {% endcomment %}
+{% block title %}Artist{% endblock  %}
+
+{% block content %}
+<form class="mb-5" method="get">
+    <div class="field has-addons">
+      <div class="control">
+        <!--  Our input will search by name of artist  -->
+        <input class="input" type="text" name="make" placeholder="name" />
+      </div>
+      <div class="control">
+        <input class="button is-success" type="submit" value="Search" />
+      </div>
+    </div>
+    <!--  This anchor tag will redirect back to artist list without a query param -->
+    <a class="button is-dark" href="{% url 'cars_list' %}">Clear Search</a>
+    <a class="button is-dark" href="{% url 'car_create' %}">Add Car</a>
+  </form>
+<h1 class="title pt-5">Some of the Classics</h1>
+<div class="gallery">
+  {% for car in cars %}
+  <a href="">
+    <div class="card">
+      <div class="card-image">
+        <figure class="image is-square">
+          <img src="{{car.image}}" alt="{{car.model}}" />
+        </figure>
+      </div>
+      <div class="card-header">
+        <p class="card-header-title">{{car.make}}</p>
+      </div>
+    </div>
+  </a>
+	{% empty %}
+  <article class="message">
+    <div class="message-header">
+      <p>No Cars Available</p>
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}
