@@ -21,7 +21,8 @@
 <h1 class="title pt-5">Some of the Classics</h1>
 <div class="gallery">
   {% for car in cars %}
-  <a href="">
+
+  <a href="{% url 'car_detail' car.pk %}">
     <div class="card">
       <div class="card-image">
         <figure class="image is-square">
