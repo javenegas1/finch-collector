@@ -15,3 +15,12 @@ class Car(models.Model):
 
     class Meta:
         ordering = ['make']
+
+class Sale(models.Model):
+
+    owner = models.CharField(max_length=150)
+    price = models.IntegerField(default=1)
+    make = models.ForeignKey(Car, on_delete=models.CASCADE, related_name="cars")
+
+    def __str__(self):
+        return self.title
