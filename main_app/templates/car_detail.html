@@ -23,6 +23,90 @@
         <h4 class="title is-4">About</h4>
         <p>{{car.bio}}</p>
     </div>
+
+    <hr/>
+
+    <!-- create new sale -->
+    <form class="mb-5" action="{% url 'sale_create' car.pk %}" method="post">
+        {% csrf_token %}
+        <div class="field has-addons">
+            <div class="control">
+                <input
+                    class="input"
+                    type="text"
+                    name="owner"
+                    placeholder="Owner"
+                    required
+                />
+            </div>
+            <div class="control">
+                <input
+                    class="input"
+                    type="number"
+                    name="price"
+                    placeholder="Price"
+                    min="1"
+                    required
+                />
+            </div>
+            <div class="control">
+                <input class="button is-primary" type="submit" value="Add Sale" />
+            </div>
+        </div>
+    </form>
+
+    <div class="detail__songs mb-5">
+        <h3 class="title is-3">Sales</h3>
+
+        {% for sale in car.sales.all %}
+            <div class="song">
+                <span>{{forloop.counter}}</span>
+                <span><b>{{sale.owner}}</b></span>
+                <span>${{sale.price}}</span>
+            </div>
+
+            <!-- add to wishlist -->
+            <span>
+                <div class="dropdown">
+                  <div class="dropdown-trigger">
+                    <button
+                      class="button"
+                      aria-haspopup="true"
+                      aria-controls="dropdown-menu"
+                    >
+                      <span>Add to my Wishlist</span>
+                      <span class="icon is-small">
+                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                    <div class="dropdown-content">
+                      {% for wishlist in wishlists %}
+                  <!-- each playlist becomes a drop
+                  down item with the ids needed to add to the join table  -->
+                      <a
+                        href="{% url 'wishlist_sale_assoc' wishlist.pk sale.pk %}?assoc=add"
+                        class="dropdown-item"
+                      >
+                        {{wishlist.title}}
+                      </a>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </span>
+
+        {% empty %}
+            <article class="message">
+                <div class="message-header">
+                    <p>No one is Selling</p>
+                </div>
+            </article>
+
+        {% endfor %}
+    </div>
+
 </div>
 
 {% endblock %}

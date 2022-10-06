@@ -19,5 +19,6 @@ from django.urls import path, include #include here is necessary for file struct
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('main_app.urls'))
+    path('', include('main_app.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 ]
